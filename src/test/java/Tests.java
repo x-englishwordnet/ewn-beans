@@ -36,7 +36,7 @@ public class Tests
 
 	@Before public void getDocument() throws IOException, XmlException
 	{
-		String xewnHome = System.getenv("XEWNHOME") + File.separator + "BUILD" + File.separator + "src";
+		String xewnHome = System.getenv("EWNHOME") + File.separator + "src";
 		final File xmlFile = new File(xewnHome, "wn-verb.body.xml");
 		this.document = LexicalResourceDocument.Factory.parse(xmlFile);
 	}

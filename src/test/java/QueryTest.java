@@ -26,9 +26,7 @@ public class QueryTest
 
 	@Before public void getDocument() throws IOException, XmlException
 	{
-		//String xewnHome = System.getenv("XEWNHOME") + File.separator + "BUILD" + File.separator + "merged";
-		//final File xmlFile = new File(xewnHome, "xewn.xml");
-		String xewnHome = System.getenv("XEWNHOME") + File.separator + "BUILD" + File.separator + "src";
+		String xewnHome = System.getenv("EWNHOME") + File.separator + File.separator + "src";
 		final File xmlFile = new File(xewnHome, "wn-verb.communication.xml");
 		this.document = LexicalResourceDocument.Factory.parse(xmlFile);
 	}
