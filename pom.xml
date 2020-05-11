@@ -6,7 +6,7 @@
 
     <groupId>io.github.x-englishwordnet</groupId>
     <artifactId>ewn-beans</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>EWN Beans</name>
     <description>Provides plain old java beans to bind to English WordNet XML files.</description>
     <url>https://github.com/x-englishwordnet/ewn-beans</url>
