@@ -1,6 +1,9 @@
 <p align="center">
 <img width="256" height="256" src="images/xewn2.png">
 </p>
+<p align="center">
+<img width="256" src="images/mavencentral.png">
+</p>
 
 ### XML beans for EWN XML schema
 
@@ -12,3 +15,11 @@ It uses the **Apache's XML Beans** framework and includes a Saxon runtime to imp
 Please refer to the test classes in the source files to get a glimpse as to how it can be used.
 
 ![ ](images/dataflow3.png  "XML beans")
+
+GroupID and ArtifactID on Maven Central:
+
+	<groupId>io.github.x-englishwordnet</groupId>
+	<artifactId>ewn-beans</artifactId>
+	<version>1.0.1</version>
+	<name>EWN Beans</name>
+	
