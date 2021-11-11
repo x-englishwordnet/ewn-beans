@@ -4,7 +4,6 @@ import org.apache.xmlbeans.XmlObject;
 import org.ewn.xmlbeans.LemmaDocument.Lemma;
 import org.ewn.xmlbeans.SenseDocument.Sense;
 import org.ewn.xmlbeans.SynsetDocument.Synset;
-import org.ewn.xmlbeans.SyntacticBehaviourDocument.SyntacticBehaviour;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ public class Query
 {
 	private static final String DECLARE_XQ_NAMESPACE = "declare namespace xq='##local';";
 
-	private static final String DECLARE_DC_NAMESPACE = "declare namespace dc='http://purl.org/dc/elements/1.1/';";
+	private static final String DECLARE_DC_NAMESPACE = "declare namespace dc='https://globalwordnet.github.io/schemas/dc/';";
 
 	private static final String DECLARE_NAMESPACES = DECLARE_XQ_NAMESPACE + DECLARE_DC_NAMESPACE;
 
@@ -40,9 +39,13 @@ public class Query
 		String query = QUERY_SYNSET + "[@id='" + id + "']";
 		XmlObject[] result = top.selectPath(query);
 		if (result.length > 1)
+		{
 			throw new IllegalArgumentException();
+		}
 		if (result.length == 0)
+		{
 			throw new IllegalArgumentException();
+		}
 		return (Synset) result[0];
 	}
 
@@ -51,31 +54,13 @@ public class Query
 		String query = QUERY_SENSE + "[@id='" + id + "']";
 		XmlObject[] result = top.selectPath(query);
 		if (result.length > 1)
+		{
 			throw new IllegalArgumentException();
+		}
 		if (result.length == 0)
+		{
 			throw new IllegalArgumentException();
-		return (Sense) result[0];
-	}
-
-	public static Sense querySenseBySensekey(XmlObject top, String sk)
-	{
-		String query = QUERY_SENSE + "[@sensekey='" + sk + "']";
-		XmlObject[] result = top.selectPath(query);
-		if (result.length > 1)
-			throw new IllegalArgumentException();
-		if (result.length == 0)
-			throw new IllegalArgumentException();
-		return (Sense) result[0];
-	}
-
-	public static Sense querySenseByDcIdentifier(XmlObject top, String sk)
-	{
-		String query = QUERY_SENSE + "[@dc:identifier='" + sk + "']";
-		XmlObject[] result = top.selectPath(query);
-		if (result.length > 1)
-			throw new IllegalArgumentException();
-		if (result.length == 0)
-			throw new IllegalArgumentException();
+		}
 		return (Sense) result[0];
 	}
 
@@ -83,9 +68,13 @@ public class Query
 	{
 		XmlObject[] result = sense.selectPath(QUERY_LEMMA_FROM_SENSE);
 		if (result.length > 1)
+		{
 			throw new IllegalArgumentException();
+		}
 		if (result.length == 0)
+		{
 			throw new IllegalArgumentException();
+		}
 		return (Lemma) result[0];
 	}
 
@@ -95,7 +84,9 @@ public class Query
 		String query = QUERY_LEMMAS_FROM_SYNSET + "[../Sense/@synset='" + synsetId + "']";
 		XmlObject[] result = synset.selectPath(query);
 		if (result.length == 0)
+		{
 			throw new IllegalArgumentException();
+		}
 		return (Lemma[]) result;
 	}
 
@@ -105,9 +96,13 @@ public class Query
 		String query = QUERY_SYNSET_FROM_SENSE + "[@id='" + synsetId + "']";
 		XmlObject[] result = sense.selectPath(query);
 		if (result.length > 1)
+		{
 			throw new IllegalArgumentException();
+		}
 		if (result.length == 0)
+		{
 			throw new IllegalArgumentException();
+		}
 		return (Synset) result[0];
 	}
 
@@ -141,10 +136,11 @@ public class Query
 		XmlObject[] result = sense.selectPath(query);
 		if (result != null)
 		{
-			SyntacticBehaviour[] sbs = (SyntacticBehaviour[]) result;
 			List<String> frames = new ArrayList<>();
-			for (SyntacticBehaviour sb : sbs)
-				frames.add(sb.getSubcategorizationFrame());
+			for (XmlObject fid : result)
+			{
+				frames.add(fid.toString());
+			}
 			return frames;
 		}
 		return null;

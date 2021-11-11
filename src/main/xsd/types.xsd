@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2020. Bernard Bou <1313ou@gmail.com>. -->
+<!-- Copyright (c) 2021. Bernard Bou <1313ou@gmail.com>. -->
 
 <!DOCTYPE xsd:schema
 [
@@ -32,8 +32,12 @@
 		<xsd:restriction base='xsd:string'>
 			<xsd:enumeration value='agent' />
 			<xsd:enumeration value='also' />
+			<xsd:enumeration value='anto_converse' />
+			<xsd:enumeration value='anto_gradable' />
 			<xsd:enumeration value='antonym' />
+			<xsd:enumeration value='anto_simple' />
 			<xsd:enumeration value='attribute' />
+			<xsd:enumeration value='augmentative' />
 			<xsd:enumeration value='be_in_state' />
 			<xsd:enumeration value='causes' />
 			<xsd:enumeration value='classified_by' />
@@ -49,14 +53,21 @@
 			<xsd:enumeration value='co_result_agent' />
 			<xsd:enumeration value='co_result_instrument' />
 			<xsd:enumeration value='co_role' />
+			<xsd:enumeration value='diminutive' />
 			<xsd:enumeration value='direction' />
 			<xsd:enumeration value='domain_region' />
 			<xsd:enumeration value='domain_topic' />
 			<xsd:enumeration value='entails' />
 			<xsd:enumeration value='eq_synonym' />
 			<xsd:enumeration value='exemplifies' />
+			<xsd:enumeration value='feminine' />
+			<xsd:enumeration value='has_augmentative' />
+			<xsd:enumeration value='has_diminutive' />
 			<xsd:enumeration value='has_domain_region' />
 			<xsd:enumeration value='has_domain_topic' />
+			<xsd:enumeration value='has_feminine' />
+			<xsd:enumeration value='has_masculine' />
+			<xsd:enumeration value='has_young' />
 			<xsd:enumeration value='holo_location' />
 			<xsd:enumeration value='holo_member' />
 			<xsd:enumeration value='holonym' />
@@ -78,18 +89,21 @@
 			<xsd:enumeration value='involved_result' />
 			<xsd:enumeration value='involved_source_direction' />
 			<xsd:enumeration value='involved_target_direction' />
+			<xsd:enumeration value='ir_synonym' />
 			<xsd:enumeration value='is_caused_by' />
 			<xsd:enumeration value='is_entailed_by' />
 			<xsd:enumeration value='is_exemplified_by' />
 			<xsd:enumeration value='is_subevent_of' />
 			<xsd:enumeration value='location' />
 			<xsd:enumeration value='manner_of' />
+			<xsd:enumeration value='masculine' />
 			<xsd:enumeration value='mero_location' />
 			<xsd:enumeration value='mero_member' />
 			<xsd:enumeration value='meronym' />
 			<xsd:enumeration value='mero_part' />
 			<xsd:enumeration value='mero_portion' />
 			<xsd:enumeration value='mero_substance' />
+			<xsd:enumeration value='other' />
 			<xsd:enumeration value='patient' />
 			<xsd:enumeration value='restricted_by' />
 			<xsd:enumeration value='restricts' />
@@ -100,25 +114,42 @@
 			<xsd:enumeration value='state_of' />
 			<xsd:enumeration value='subevent' />
 			<xsd:enumeration value='target_direction' />
-			<xsd:enumeration value='other' />
+			<xsd:enumeration value='young' />
 		</xsd:restriction>
 	</xsd:simpleType>
 
 	<xsd:simpleType name='SenseRelationType'>
 		<xsd:restriction base='xsd:string'>
-			<xsd:enumeration value='antonym' />
 			<xsd:enumeration value='also' />
+			<xsd:enumeration value='anto_converse' />
+			<xsd:enumeration value='anto_gradable' />
+			<xsd:enumeration value='antonym' />
+			<xsd:enumeration value='anto_simple' />
+			<xsd:enumeration value='augmentative' />
+			<xsd:enumeration value='derivation' />
+			<xsd:enumeration value='diminutive' />
+			<xsd:enumeration value='domain_region' />
+			<xsd:enumeration value='domain_topic' />
+			<xsd:enumeration value='exemplifies' />
+			<xsd:enumeration value='feminine' />
+			<xsd:enumeration value='has_augmentative' />
+			<xsd:enumeration value='has_diminutive' />
+			<xsd:enumeration value='has_domain_region' />
+			<xsd:enumeration value='has_domain_topic' />
+			<xsd:enumeration value='has_feminine' />
+			<xsd:enumeration value='has_masculine' />
+			<xsd:enumeration value='has_young' />
+			<xsd:enumeration value='is_exemplified_by' />
+			<xsd:enumeration value='masculine' />
+			<xsd:enumeration value='other' />
 			<xsd:enumeration value='participle' />
 			<xsd:enumeration value='pertainym' />
-			<xsd:enumeration value='derivation' />
-			<xsd:enumeration value='domain_topic' />
-			<xsd:enumeration value='has_domain_topic' />
-			<xsd:enumeration value='domain_region' />
-			<xsd:enumeration value='has_domain_region' />
-			<xsd:enumeration value='exemplifies' />
-			<xsd:enumeration value='is_exemplified_by' />
+			<xsd:enumeration value='secondary_aspect_ip' />
+			<xsd:enumeration value='secondary_aspect_pi' />
 			<xsd:enumeration value='similar' />
-			<xsd:enumeration value='other' />
+			<xsd:enumeration value='simple_aspect_ip' />
+			<xsd:enumeration value='simple_aspect_pi' />
+			<xsd:enumeration value='young' />
 		</xsd:restriction>
 	</xsd:simpleType>
 
