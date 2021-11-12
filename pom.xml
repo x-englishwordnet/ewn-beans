@@ -17,6 +17,20 @@
 			<artifactId>xmlbeans</artifactId>
 			<version>5.0.2</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE -->
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>10.6</version>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.14.1</version>
+			<scope>runtime</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -48,26 +62,11 @@
 				</executions>
 
 				<configuration>
-					<verbose>true</verbose>
-					<repackage>org.ewn.xmlbeans</repackage>
-					<xmlConfigs>${project.basedir}/src/main/schema/xmlconfig.xml</xmlConfigs>
 					<name>ewn</name>
+					<verbose>true</verbose>
+					<xmlConfigs>${project.basedir}/src/main/schema/xmlconfig.xml</xmlConfigs>
+					<repackage>org.ewn.xmlbeans</repackage>
 					<partialMethods>ALL,-GET_LIST,-XGET_LIST,-XGET_ARRAY</partialMethods>
-<!--					<sourceSchemas>*.xsd</sourceSchemas>-->
-					<!--                    <mdefNamespaces>-->
-					<!--                        <mdefNamespace>schubidubi</mdefNamespace>-->
-					<!--                    </mdefNamespaces>-->
-					<!--                    <extensions>-->
-					<!--                        <extension>-->
-					<!--                            <className>org.apache.xmlbeans.impl.tool.Extension</className>-->
-					<!--                            <params>-->
-					<!--                                <param>-->
-					<!--                                    <name>name</name>-->
-					<!--                                    <value>value</value>-->
-					<!--                                </param>-->
-					<!--                            </params>-->
-					<!--                        </extension>-->
-					<!--                    </extensions>-->
 				</configuration>
 
 				<dependencies>
