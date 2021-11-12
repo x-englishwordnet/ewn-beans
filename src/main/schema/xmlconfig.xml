@@ -5,8 +5,8 @@
    <!-- Use the "namespace" element to map a namespace to the Java package name that should be generated. -->
    <xb:namespace uri="##local">
         <xb:package>org.ewn.xmlbeans</xb:package>
-		<xb:prefix>OEWN</xb:prefix>
-		<xb:suffix>TAIL</xb:suffix>
+<!--		<xb:prefix>OEWN</xb:prefix>-->
+<!--		<xb:suffix>Object</xb:suffix>-->
     </xb:namespace>
 
  </xb:config>

@@ -50,7 +50,7 @@
 				<configuration>
 					<verbose>true</verbose>
 					<repackage>org.ewn.xmlbeans</repackage>
-<!--					<xmlConfigs implementation="java.io.File">${project.basedir}/src/schema/ewn.xsdconfig</xmlConfigs>-->
+					<xmlConfigs>${project.basedir}/src/main/schema/xmlconfig.xml</xmlConfigs>
 					<name>ewn</name>
 					<partialMethods>ALL,-GET_LIST,-XGET_LIST,-XGET_ARRAY</partialMethods>
 <!--					<sourceSchemas>*.xsd</sourceSchemas>-->

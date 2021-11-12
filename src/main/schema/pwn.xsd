@@ -8,8 +8,8 @@
 <!ENTITY lexsense "\d+:\d+:\d+:[a-z0-9_'/\-\.]*:\d*">
 ]>
 <xsd:schema xmlns:xsd='http://www.w3.org/2001/XMLSchema'
-            targetNamespace="https://xmlbeans.ewn.org"
-            xmlns="https://xmlbeans.ewn.org"
+            targetNamespace=""
+            xmlns=""
 	>
 
 	<!-- T Y P E S  -->

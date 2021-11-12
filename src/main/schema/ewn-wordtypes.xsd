@@ -17,8 +17,8 @@
 <!-- '/': A/C -->
 
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="https://xmlbeans.ewn.org"
-            xmlns="https://xmlbeans.ewn.org"
+            targetNamespace=""
+            xmlns=""
 	>
 
 	<!-- form types -->
