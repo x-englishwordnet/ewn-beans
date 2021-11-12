@@ -6,7 +6,9 @@
 [
 <!ENTITY ili "i\d+|in">
 ]>
-<xsd:schema xmlns:xsd='http://www.w3.org/2001/XMLSchema' 
+<xsd:schema xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+            targetNamespace="https://xmlbeans.ewn.org"
+            xmlns="https://xmlbeans.ewn.org"
 	>
 
 	<xsd:include schemaLocation='meta.xsd' />

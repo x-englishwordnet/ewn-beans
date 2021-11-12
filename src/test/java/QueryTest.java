@@ -30,7 +30,7 @@ public class QueryTest
 	private LexicalResourceDocument document;
 
 	@Before
-	public void getDocument() throws IOException, XmlException
+	public void getDocument() throws XmlException, IOException
 	{
 		if (source == null)
 		{

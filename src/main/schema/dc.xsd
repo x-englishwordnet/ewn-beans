@@ -7,11 +7,13 @@
 ]>
 
 <xsd:schema xmlns:xsd='http://www.w3.org/2001/XMLSchema' 
-	xmlns:dc='https://globalwordnet.github.io/schemas/dc/'
-	targetNamespace='https://globalwordnet.github.io/schemas/dc/'>
+            targetNamespace="https://globalwordnet.github.io/schemas/dc/"
+            xmlns="https://globalwordnet.github.io/schemas/dc/"
+            xmlns:ewn="https://xmlbeans.ewn.org"
+>
 
-	<xsd:import schemaLocation='pwn.xsd' />
-	<xsd:import schemaLocation='types.xsd' />
+	<xsd:import schemaLocation='pwn.xsd' namespace = "https://xmlbeans.ewn.org" />
+	<xsd:import schemaLocation='types.xsd'  namespace = "https://xmlbeans.ewn.org"/>
 
 	<!-- A T T R I B U T E S -->
 
@@ -30,12 +32,9 @@
 	<xsd:attribute name='type' type='xsd:string' />
 
 	<!-- sensekey -->
-	<xsd:attribute name='identifier' type='LegacySenseKeyType' />
+	<xsd:attribute name='identifier' type='ewn:LegacySenseKeyType' />
 
 	<!-- subject -->
-	<xsd:attribute name='subject' type='LexFileType' />
+	<xsd:attribute name='subject' type='ewn:LexFileType' />
 
 </xsd:schema>
-
-
-

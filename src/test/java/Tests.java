@@ -36,7 +36,7 @@ public class Tests
 	private LexicalResourceDocument document;
 
 	@Before
-	public void getDocument() throws IOException, XmlException
+	public void getDocument() throws XmlException, IOException
 	{
 		if (source == null)
 		{
@@ -134,7 +134,7 @@ public class Tests
 	}
 
 	@Test
-	public void scanSenses() throws IOException, IOException, XmlException
+	public void scanSenses()
 	{
 		assertNotNull(this.document);
 		final LexicalResource lexicalResource = document.getLexicalResource();
@@ -192,7 +192,7 @@ public class Tests
 	}
 
 	@Test
-	public void scanSynsets() throws IOException, IOException, XmlException
+	public void scanSynsets()
 	{
 		assertNotNull(this.document);
 		final LexicalResource lexicalResource = this.document.getLexicalResource();
