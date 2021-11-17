@@ -16,6 +16,7 @@ public class Query
 
 	private static final String DECLARE_NAMESPACES = DECLARE_XQ_NAMESPACE + DECLARE_DC_NAMESPACE;
 
+
 	// private static String QUERY_SYNSET = DECLARE_NAMESPACES + "$this/LexicalResource/Lexicon/Synset";
 	private static final String QUERY_SYNSET = DECLARE_NAMESPACES + "$this//Synset";
 

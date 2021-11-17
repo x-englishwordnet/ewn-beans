@@ -45,6 +45,11 @@ public class Tests
 		}
 		final File xmlFile = new File(source);
 		System.out.printf("source=%s%n", xmlFile.getAbsolutePath());
+		if (!xmlFile.exists())
+		{
+			System.err.println("Define XML source dir that exists");
+			System.exit(2);
+		}
 		this.document = LexicalResourceDocument.Factory.parse(xmlFile);
 	}
 
@@ -56,7 +61,10 @@ public class Tests
 		assertNotNull(synset);
 		assertEquals(SYNSET_ID, synset.getId());
 		Definition definition = synset.getDefinitionArray(0);
-		System.out.printf("%s: %s '%s'%n", "getSynsetById", synset.getId(), ((SimpleValue) definition).getStringValue());
+		if (!silent)
+		{
+			System.out.printf("%s: %s '%s'%n", "getSynsetById", synset.getId(), ((SimpleValue) definition).getStringValue());
+		}
 	}
 
 	@Test
@@ -70,7 +78,10 @@ public class Tests
 		assertTrue(lemmas.length > 0);
 		for (Lemma lemma : lemmas)
 		{
-			System.out.printf("%s: %s%n", "getLemmasFromSynset", lemma.getWrittenForm());
+			if (!silent)
+			{
+				System.out.printf("%s: %s%n", "getLemmasFromSynset", lemma.getWrittenForm());
+			}
 		}
 	}
 
@@ -82,7 +93,10 @@ public class Tests
 		assertNotNull(sense);
 		String senseId = sense.getId();
 		assertEquals(SENSE_ID, senseId);
-		System.out.printf("%s: %s%n", "getSenseById", senseId);
+		if (!silent)
+		{
+			System.out.printf("%s: %s%n", "getSenseById", senseId);
+		}
 	}
 
 	@Test
@@ -94,7 +108,10 @@ public class Tests
 		assertEquals(SENSE_ID, sense.getId());
 		Lemma lemma = Query.queryLemmaFromSense(sense);
 		assertNotNull(lemma);
-		System.out.printf("%s: %s%n", "getLemmaFromSense", lemma.getWrittenForm());
+		if (!silent)
+		{
+			System.out.printf("%s: %s%n", "getLemmaFromSense", lemma.getWrittenForm());
+		}
 	}
 
 	@Test
@@ -107,7 +124,10 @@ public class Tests
 		Synset synset = Query.querySynsetFromSense(sense);
 		assertNotNull(synset);
 		Definition definition = synset.getDefinitionArray(0);
-		System.out.printf("%s: %s '%s'%n", "getSynsetFromSense", synset.getId(), ((SimpleValue) definition).getStringValue());
+		if (!silent)
+		{
+			System.out.printf("%s: %s '%s'%n", "getSynsetFromSense", synset.getId(), ((SimpleValue) definition).getStringValue());
+		}
 	}
 
 	@Test
@@ -119,7 +139,11 @@ public class Tests
 		assertNotNull(sense);
 		String senseId2 = Utils.toSensekey(sense.getId());
 		assertEquals(SENSEKEY, senseId2);
-		System.out.printf("%s: %s%n", "getSenseBySensekey", senseId2);}
+		if (!silent)
+		{
+			System.out.printf("%s: %s%n", "getSenseBySensekey", senseId2);
+		}
+	}
 
 	@Test
 	public void getSensesByWord()
@@ -129,7 +153,10 @@ public class Tests
 		assertNotNull(senses);
 		for (Sense sense : senses)
 		{
-			System.out.printf("%s: %s%n", "getSensesOf", sense.getIdentifier());
+			if (!silent)
+			{
+				System.out.printf("%s: %s%n", "getSensesOf", sense.getIdentifier());
+			}
 		}
 	}
 
@@ -202,7 +229,7 @@ public class Tests
 
 		for (Synset synset : lexicon.getSynsetArray())
 		{
-			LexFileType.Enum subject = synset.getSubject();
+			LexFileType.Enum lexFile = synset.getSubject();
 
 			PartOfSpeechType.Enum pos = synset.getPartOfSpeech();
 			assertNotNull(pos);
