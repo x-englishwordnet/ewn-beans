@@ -7,11 +7,12 @@
 ]>
 
 <xsd:schema xmlns:xsd='http://www.w3.org/2001/XMLSchema' 
-	xmlns:dc='https://globalwordnet.github.io/schemas/dc/'
-	targetNamespace='https://globalwordnet.github.io/schemas/dc/'>
+            targetNamespace="https://globalwordnet.github.io/schemas/dc/"
+            xmlns:dc="https://globalwordnet.github.io/schemas/dc/"
+>
 
-	<xsd:import schemaLocation='pwn.xsd' />
-	<xsd:import schemaLocation='types.xsd' />
+	<xsd:import schemaLocation='pwn.xsd' namespace = "" />
+	<xsd:import schemaLocation='types.xsd'  namespace = ""/>
 
 	<!-- A T T R I B U T E S -->
 
@@ -36,6 +37,3 @@
 	<xsd:attribute name='subject' type='LexFileType' />
 
 </xsd:schema>
-
-
-

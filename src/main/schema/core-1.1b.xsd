@@ -3,9 +3,10 @@
 <!-- Copyright (c) 2020. Bernard Bou <1313ou@gmail.com>. -->
 
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace=""
+            xmlns=""
             xmlns:dc='https://globalwordnet.github.io/schemas/dc/'
-            xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-            jaxb:version="3.0">
+>
 
 	<xsd:import namespace='https://globalwordnet.github.io/schemas/dc/' schemaLocation='dc.xsd'/>
 	<xsd:include schemaLocation='pwn.xsd'/>

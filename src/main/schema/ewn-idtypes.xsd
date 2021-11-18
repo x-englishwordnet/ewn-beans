@@ -9,7 +9,10 @@
 <!ENTITY senseid "oewn\-.*">
 <!ENTITY syntacticbehaviourid ".*">
 ]>
-<xsd:schema	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               targetNamespace=""
+               xmlns=""
+>
 
 	<!-- The LocalXXX variety means the target resides in the same file -->
 	<!-- The XXX variety means the target may reside in the same file or outside -->

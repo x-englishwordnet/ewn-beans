@@ -74,10 +74,9 @@ public class Utils
 	 */
 	static public String toId(String sensekey)
 	{
-		String id = sensekey;
-		int b = id.indexOf('%');
+		int b = sensekey.indexOf('%');
 
-		String lemma = id.substring(0, b) //
+		String lemma = sensekey.substring(0, b) //
 				.replace("'", "-ap-") //
 				.replace("(", "-lb-") // extension
 				.replace(")", "-rb-") // extension
@@ -87,7 +86,7 @@ public class Utils
 				.replace(":", "-cl-") //
 				.replace("_", "-sp-"); // extension
 
-		String tail = id.substring(b + 1) //
+		String tail = sensekey.substring(b + 1) //
 				.replace("_", "-sp-")
 				.replace(":", ".") // extension
 				.replace("'", "-ap-") // extension
