@@ -1,8 +1,10 @@
 package org.ewn.xmlbeans;
 
-import java.util.Collection;
 import java.util.function.Function;
 
+/**
+ * Utilities
+ */
 public class Utils
 {
 	private Utils()
@@ -33,12 +35,11 @@ public class Utils
 		String tail = sk.substring(b + 2) //
 				.replace(".", ":") //
 				.replace("-ap-", "'") // extension
-				.replace("-ap-", "'") // extension
 				.replace("-lb-", "(") // extension
 				.replace("-rb-", ")") // extension
 				.replace("-sl-", "/") // extension
-				.replace("-cm-", ",") // extension
 				.replace("-ex-", "!") // extension
+				.replace("-cm-", ",") // extension
 				.replace("-cl-", ":") // extension
 				.replace("-sp-", "_");
 
@@ -53,17 +54,23 @@ public class Utils
 	        r = "__".join(e[1:])
 	        return (
 	        l
-	        .replace("-ap-", "'")
-	        .replace("-sl-", "/")
-	        .replace("-ex-", "!")
-	        .replace("-cm-",",")
-	        .replace("-cl-",":")
+		        .replace("-ap-", "'")
+		        .replace("-sl-", "/")
+		        .replace("-ex-", "!")
+		        .replace("-cm-",",")
+		        .replace("-cl-",":")
 	        + "%" +
 	        r
-	        .replace(".", ":")
-	        .replace("-sp-","_"))
+		        .replace(".", ":")
+		        .replace("-sp-","_"))
 	    else:
-	        return sk[KEY_PREFIX_LEN:].replace("__", "%").replace("-ap-", "'").replace("-sl-", "/").replace("-ex-", "!").replace("-cm-",",").replace("-cl-",":")
+	        return sk[KEY_PREFIX_LEN:]
+		        .replace("__", "%")
+		        .replace("-ap-", "'")
+		        .replace("-sl-", "/")
+		        .replace("-ex-", "!")
+		        .replace("-cm-",",")
+		        .replace("-cl-",":")
 	*/
 
 	/**
@@ -87,8 +94,7 @@ public class Utils
 				.replace("_", "-sp-"); // extension
 
 		String tail = sensekey.substring(b + 1) //
-				.replace("_", "-sp-")
-				.replace(":", ".") // extension
+				.replace("_", "-sp-") //
 				.replace("'", "-ap-") // extension
 				.replace("(", "-lb-") // extension
 				.replace(")", "-rb-") // extension
@@ -103,34 +109,66 @@ public class Utils
 	def map_sense_key(sk):
 	    if "%" in sk:
 	        e = sk.split("%")
-	        return ("oewn-" + e[0]
-	        .replace("'","-ap-")
-	        .replace("/","-sl-")
-	        .replace("!","-ex-")
-	        .replace(",","-cm-")
-	        .replace(":","-cl-") +
-	        "__" + e[1]
-	        .replace("_","-sp-")
-	        .replace(":","."))
+	        return ("oewn-" +
+		        e[0]
+			        .replace("'","-ap-")
+			        .replace("/","-sl-")
+			        .replace("!","-ex-")
+			        .replace(",","-cm-")
+			        .replace(":","-cl-")
+			    + "__" +
+			    e[1]
+			        .replace("_","-sp-")
+			        .replace(":","."))
 	    else:
 	        return "oewn-" + sk
-	        .replace("%", "__")
-	        .replace("'","-ap-")
-	        .replace("/","-sl-")
-	        .replace("!","-ex-")
-	        .replace(",","-cm-")
-	        .replace(":","-cl-")
+		        .replace("%", "__")
+		        .replace("'","-ap-")
+		        .replace("/","-sl-")
+		        .replace("!","-ex-")
+		        .replace(",","-cm-")
+		        .replace(":","-cl-")
 	*/
 
 	/**
 	 * Join items
 	 *
-	 * @param items collection of items of type T
+	 * @param <T>   type of items
+	 * @param items array of items of type T
 	 * @param delim delimiter
 	 * @param f     string function to represent item
 	 * @return joined string representation of items
 	 */
-	static public <T> String join(Collection<T> items, char delim, Function<T, String> f)
+	public static <T> String join(T[] items, char delim, Function<T, String> f)
+	{
+		StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		for (T item : items)
+		{
+			if (first)
+			{
+				first = false;
+			}
+			else
+			{
+				sb.append(delim);
+			}
+			String value = f.apply(item);
+			sb.append(value);
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * Join items
+	 *
+	 * @param <T>   type of items
+	 * @param items iteration of items of type T
+	 * @param delim delimiter
+	 * @param f     string function to represent item
+	 * @return joined string representation of items
+	 */
+	public static <T> String join(Iterable<T> items, char delim, Function<T, String> f)
 	{
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;

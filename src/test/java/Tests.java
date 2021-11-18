@@ -1,31 +1,25 @@
-import org.apache.xmlbeans.SimpleValue;
 import org.apache.xmlbeans.XmlException;
-import org.ewn.xmlbeans.*;
-import org.ewn.xmlbeans.DefinitionDocument.Definition;
-import org.ewn.xmlbeans.ExampleDocument.Example;
 import org.ewn.xmlbeans.LemmaDocument.Lemma;
-import org.ewn.xmlbeans.LexicalEntryDocument.LexicalEntry;
-import org.ewn.xmlbeans.LexicalResourceDocument.LexicalResource;
-import org.ewn.xmlbeans.LexiconDocument.Lexicon;
+import org.ewn.xmlbeans.LexicalResourceDocument;
+import org.ewn.xmlbeans.Query;
 import org.ewn.xmlbeans.SenseDocument.Sense;
-import org.ewn.xmlbeans.SenseRelationDocument.SenseRelation;
+import org.ewn.xmlbeans.Strings;
 import org.ewn.xmlbeans.SynsetDocument.Synset;
-import org.ewn.xmlbeans.SynsetRelationDocument.SynsetRelation;
-import org.junit.Before;
+import org.ewn.xmlbeans.Utils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.util.List;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
 public class Tests
 {
-	private final String source = System.getProperty("SOURCE");
+	private static final String source = System.getProperty("SOURCE");
 
-	private final boolean silent = System.getProperties().containsKey("SILENT");
+	private static final boolean silent = System.getProperties().containsKey("SILENT");
 
 	private static final String WORD = "generate";
 	private static final String WORD2 = "suffer";
@@ -33,10 +27,10 @@ public class Tests
 	private static final String SENSE_ID = "oewn-generate__2.29.00..";
 	private static final String SENSEKEY = "generate%2:29:00::";
 
-	private LexicalResourceDocument document;
+	private static LexicalResourceDocument document;
 
-	@Before
-	public void getDocument() throws XmlException, IOException
+	@BeforeClass
+	public static void getDocument() throws XmlException, IOException
 	{
 		if (source == null)
 		{
@@ -50,37 +44,49 @@ public class Tests
 			System.err.println("Define XML source dir that exists");
 			System.exit(2);
 		}
-		this.document = LexicalResourceDocument.Factory.parse(xmlFile);
+		document = LexicalResourceDocument.Factory.parse(xmlFile);
+		assertNotNull(document);
 	}
 
 	@Test
 	public void getSynsetById()
 	{
-		assertNotNull(this.document);
-		Synset synset = Query.querySynsetById(this.document, SYNSET_ID);
-		assertNotNull(synset);
-		assertEquals(SYNSET_ID, synset.getId());
-		Definition definition = synset.getDefinitionArray(0);
-		if (!silent)
+		for (String synsetId : Arrays.asList(SYNSET_ID))
 		{
-			System.out.printf("%s: %s '%s'%n", "getSynsetById", synset.getId(), ((SimpleValue) definition).getStringValue());
+			if (!silent)
+			{
+				System.out.printf("%s(%s):%n", "getSynsetById", synsetId);
+			}
+			Synset synset = Query.querySynsetById(document, synsetId);
+			assertNotNull(synset);
+			assertEquals(synsetId, synset.getId());
+			if (!silent)
+			{
+				System.out.printf("\t%s%n", Strings.toString(synset));
+			}
 		}
 	}
 
 	@Test
 	public void getLemmasFromSynset()
 	{
-		assertNotNull(this.document);
-		Synset synset = Query.querySynsetById(this.document, SYNSET_ID);
-		assertNotNull(synset);
-		assertEquals(SYNSET_ID, synset.getId());
-		Lemma[] lemmas = Query.queryLemmasFromSynset(synset);
-		assertTrue(lemmas.length > 0);
-		for (Lemma lemma : lemmas)
+		for (String synsetId : Arrays.asList(SYNSET_ID))
 		{
 			if (!silent)
 			{
-				System.out.printf("%s: %s%n", "getLemmasFromSynset", lemma.getWrittenForm());
+				System.out.printf("%s(%s):%n", "getLemmasFromSynset", synsetId);
+			}
+			Synset synset = Query.querySynsetById(document, synsetId);
+			assertNotNull(synset);
+			assertEquals(synsetId, synset.getId());
+			Lemma[] lemmas = Query.queryLemmasFromSynset(synset);
+			assertTrue(lemmas.length > 0);
+			for (Lemma lemma : lemmas)
+			{
+				if (!silent)
+				{
+					System.out.printf("\t%s%n", lemma.getWrittenForm());
+				}
 			}
 		}
 	}
@@ -88,166 +94,103 @@ public class Tests
 	@Test
 	public void getSenseById()
 	{
-		assertNotNull(this.document);
-		Sense sense = Query.querySenseById(this.document, SENSE_ID);
-		assertNotNull(sense);
-		String senseId = sense.getId();
-		assertEquals(SENSE_ID, senseId);
-		if (!silent)
+		for (String senseId1 : Arrays.asList(SENSE_ID))
 		{
-			System.out.printf("%s: %s%n", "getSenseById", senseId);
+			if (!silent)
+			{
+				System.out.printf("%s(%s):%n", "getSenseById", senseId1);
+			}
+			Sense sense = Query.querySenseById(document, senseId1);
+			assertNotNull(sense);
+			String senseId2 = sense.getId();
+			assertEquals(senseId1, senseId2);
+			if (!silent)
+			{
+				System.out.printf("\t%s%n", senseId2);
+			}
 		}
 	}
 
 	@Test
 	public void getLemmaFromSense()
 	{
-		assertNotNull(this.document);
-		Sense sense = Query.querySenseById(this.document, SENSE_ID);
-		assertNotNull(sense);
-		assertEquals(SENSE_ID, sense.getId());
-		Lemma lemma = Query.queryLemmaFromSense(sense);
-		assertNotNull(lemma);
-		if (!silent)
+		for (String senseId : Arrays.asList(SENSE_ID))
 		{
-			System.out.printf("%s: %s%n", "getLemmaFromSense", lemma.getWrittenForm());
+			if (!silent)
+			{
+				System.out.printf("%s(%s):%n", "getLemmaFromSense", senseId);
+			}
+			Sense sense = Query.querySenseById(document, senseId);
+			assertNotNull(sense);
+			assertEquals(senseId, sense.getId());
+			Lemma lemma = Query.queryLemmaFromSense(sense);
+			assertNotNull(lemma);
+			if (!silent)
+			{
+				System.out.printf("\t%s%n", lemma.getWrittenForm());
+			}
 		}
 	}
 
 	@Test
 	public void getSynsetFromSense()
 	{
-		assertNotNull(this.document);
-		Sense sense = Query.querySenseById(this.document, SENSE_ID);
-		assertNotNull(sense);
-		assertEquals(SENSE_ID, sense.getId());
-		Synset synset = Query.querySynsetFromSense(sense);
-		assertNotNull(synset);
-		Definition definition = synset.getDefinitionArray(0);
-		if (!silent)
+		for (String senseId : Arrays.asList(SENSE_ID))
 		{
-			System.out.printf("%s: %s '%s'%n", "getSynsetFromSense", synset.getId(), ((SimpleValue) definition).getStringValue());
+			if (!silent)
+			{
+				System.out.printf("%s(%s):%n", "getSynsetFromSense", senseId);
+			}
+			Sense sense = Query.querySenseById(document, senseId);
+			assertNotNull(sense);
+			assertEquals(senseId, sense.getId());
+			Synset synset = Query.querySynsetFromSense(sense);
+			assertNotNull(synset);
+			if (!silent)
+			{
+				System.out.printf("\t%s%n", Strings.toString(synset));
+			}
 		}
 	}
 
 	@Test
 	public void getSenseBySensekey()
 	{
-		String senseId = Utils.toId(SENSEKEY);
-		assertNotNull(this.document);
-		Sense sense = Query.querySenseById(this.document, senseId);
-		assertNotNull(sense);
-		String senseId2 = Utils.toSensekey(sense.getId());
-		assertEquals(SENSEKEY, senseId2);
-		if (!silent)
+		for (String sensekey : Arrays.asList(SENSEKEY))
 		{
-			System.out.printf("%s: %s%n", "getSenseBySensekey", senseId2);
+			if (!silent)
+			{
+				System.out.printf("%s(%s):%n", "getSenseBySensekey", sensekey);
+			}
+			String senseId1 = Utils.toId(sensekey);
+			Sense sense = Query.querySenseById(document, senseId1);
+			assertNotNull(sense);
+			String senseId2 = Utils.toSensekey(sense.getId());
+			assertEquals(sensekey, senseId2);
+			if (!silent)
+			{
+				System.out.printf("\t%s %s%n", senseId1, senseId2);
+			}
 		}
 	}
 
 	@Test
 	public void getSensesByWord()
 	{
-		assertNotNull(this.document);
-		Sense[] senses = Query.querySensesOf(this.document, WORD2);
-		assertNotNull(senses);
-		for (Sense sense : senses)
+		for (String word : Arrays.asList(WORD, WORD2))
 		{
 			if (!silent)
 			{
-				System.out.printf("%s: %s%n", "getSensesOf", sense.getIdentifier());
+				System.out.printf("%s(%s):%n", "getSensesByWord", word);
 			}
-		}
-	}
-
-	@Test
-	public void scanSenses()
-	{
-		assertNotNull(this.document);
-		final LexicalResource lexicalResource = document.getLexicalResource();
-		assertNotNull(lexicalResource);
-		final Lexicon lexicon = lexicalResource.getLexiconArray()[0];
-		assertNotNull(lexicon);
-
-		for (LexicalEntry entry : lexicon.getLexicalEntryArray())
-		{
-			Lemma lemma = entry.getLemma();
-			assertNotNull(lemma);
-			PartOfSpeechType.Enum pos = lemma.getPartOfSpeech();
-			assertNotNull(pos);
-			String writtenForm = lemma.getWrittenForm();
-			assertNotNull(writtenForm);
-			WrittenFormType writtenFormType = lemma.xgetWrittenForm();
-			assertNotNull(writtenFormType);
-
-			for (Sense sense : entry.getSenseArray())
+			Sense[] senses = Query.querySensesOf(document, word);
+			assertNotNull(senses);
+			for (Sense sense : senses)
 			{
-				String id = sense.getId();
-				assertNotNull(id);
-				String synsetId = sense.getSynset();
-				assertNotNull(synsetId);
-
-				BigInteger n = sense.getN();
-				//assertNotNull(n);
-				String identifier = sense.getIdentifier();
-				//assertNotNull(identifier);
-
-				// adj
-				AdjPositionType.Enum adjPosition = sense.getAdjposition();
-
-				// verb
-				List<String> verbFrames = Query.queryVerbFrames(sense);
-				if (verbFrames != null)
+				if (!silent)
 				{
-					for (String verbFrame : verbFrames)
-					{
-						assertNotNull(verbFrame);
-						//System.out.printf("verb frame %s%n", verbFrame);
-					}
+					System.out.printf("\t%s%n", Utils.toSensekey(sense.getId()));
 				}
-				for (SenseRelation senseRelation : sense.getSenseRelationArray())
-				{
-					String target = senseRelation.getTarget();
-					assertNotNull(target);
-					SenseRelationType type = senseRelation.xgetRelType();
-					assertNotNull(type);
-					SenseIDREFType idref = senseRelation.xgetTarget();
-					assertNotNull(idref);
-				}
-			}
-		}
-	}
-
-	@Test
-	public void scanSynsets()
-	{
-		assertNotNull(this.document);
-		final LexicalResource lexicalResource = this.document.getLexicalResource();
-		assertNotNull(lexicalResource);
-		final Lexicon lexicon = lexicalResource.getLexiconArray()[0];
-		assertNotNull(lexicon);
-
-		for (Synset synset : lexicon.getSynsetArray())
-		{
-			LexFileType.Enum lexFile = synset.getSubject();
-
-			PartOfSpeechType.Enum pos = synset.getPartOfSpeech();
-			assertNotNull(pos);
-			DefinitionDocument.Definition definition = synset.getDefinitionArray(0);
-			assertNotNull(definition);
-
-			for (Example example : synset.getExampleArray())
-			{
-				assertNotNull(example);
-			}
-			for (SynsetRelation synsetRelation : synset.getSynsetRelationArray())
-			{
-				String target = synsetRelation.getTarget();
-				assertNotNull(target);
-				SynsetRelationType type = synsetRelation.xgetRelType();
-				assertNotNull(type);
-				SynsetIDREFType idref = synsetRelation.xgetTarget();
-				assertNotNull(idref);
 			}
 		}
 	}

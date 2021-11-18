@@ -4,7 +4,7 @@ import org.ewn.xmlbeans.LexicalResourceDocument;
 import org.ewn.xmlbeans.Query;
 import org.ewn.xmlbeans.SenseDocument.Sense;
 import org.ewn.xmlbeans.SynsetDocument.Synset;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
@@ -12,18 +12,18 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertNotNull;
 
-public class QueryTest
+public class QueryTests
 {
-	private final String source = System.getProperty("SOURCE");
+	private static final String source = System.getProperty("SOURCE");
 
 	private final boolean silent = System.getProperties().containsKey("SILENT");
 
-	private static final String[] WORDS = new String[]{"house", "giggle", "breathe", "critical", "galore"};
+	private static final String[] WORDS = new String[]{"giggle", "breathe", /* "house", "critical", "galore" */};
 
-	private LexicalResourceDocument document;
+	private static LexicalResourceDocument document;
 
-	@Before
-	public void getDocument() throws XmlException, IOException
+	@BeforeClass
+	public static void getDocument() throws XmlException, IOException
 	{
 		if (source == null)
 		{
@@ -37,7 +37,7 @@ public class QueryTest
 			System.err.println("Define XML source dir that exists");
 			System.exit(2);
 		}
-		this.document = LexicalResourceDocument.Factory.parse(xmlFile);
+		document = LexicalResourceDocument.Factory.parse(xmlFile);
 	}
 
 	@Test
@@ -51,8 +51,8 @@ public class QueryTest
 
 	public void queryWord(String word)
 	{
-		assertNotNull(this.document);
-		Sense[] senses = Query.querySensesOf(this.document, word);
+		assertNotNull(document);
+		Sense[] senses = Query.querySensesOf(document, word);
 		assertNotNull(senses);
 		if (!silent)
 		{
@@ -62,11 +62,11 @@ public class QueryTest
 		for (Sense sense : senses)
 		{
 			assertNotNull(sense);
-			Dump.walkSense(sense, "\t", silent);
+			Dump.dumpSense(sense, "\t", silent);
 
 			Synset synset = Query.querySynsetFromSense(sense);
 			assertNotNull(synset);
-			Dump.walkSynset(synset, "\t\t", silent);
+			Dump.dumpSynset(synset, "\t\t", silent);
 			if (!silent)
 			{
 				System.out.println();

@@ -7,7 +7,11 @@ import org.ewn.xmlbeans.SynsetDocument.Synset;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
+/**
+ * Queries
+ */
 public class Query
 {
 	private static final String DECLARE_XQ_NAMESPACE = "declare namespace xq='##local';";
@@ -17,14 +21,14 @@ public class Query
 	private static final String DECLARE_NAMESPACES = DECLARE_XQ_NAMESPACE + DECLARE_DC_NAMESPACE;
 
 
-	// private static String QUERY_SYNSET = DECLARE_NAMESPACES + "$this/LexicalResource/Lexicon/Synset";
-	private static final String QUERY_SYNSET = DECLARE_NAMESPACES + "$this//Synset";
+	private static String QUERY_SYNSET = DECLARE_NAMESPACES + "$this/LexicalResource/Lexicon/Synset";
+	//private static final String QUERY_SYNSET = DECLARE_NAMESPACES + "$this//Synset";
 
-	//private static String QUERY_SENSE = DECLARE_NAMESPACES + "$this/LexicalResource/Lexicon/LexicalEntry/Sense";
-	private static final String QUERY_SENSE = DECLARE_NAMESPACES + "$this//Sense";
+	private static String QUERY_SENSE = DECLARE_NAMESPACES + "$this/LexicalResource/Lexicon/LexicalEntry/Sense";
+	//private static final String QUERY_SENSE = DECLARE_NAMESPACES + "$this//Sense";
 
-	//private static String QUERY_SYNTACTIC_BEHAVIOUR = DECLARE_NAMESPACES + "$this/LexicalResource/Lexicon/SyntacticBehaviour";
-	private static final String QUERY_SYNTACTIC_BEHAVIOUR = DECLARE_NAMESPACES + "$this//SyntacticBehaviour";
+	private static String QUERY_SYNTACTIC_BEHAVIOUR = DECLARE_NAMESPACES + "$this/LexicalResource/Lexicon/SyntacticBehaviour";
+	//private static final String QUERY_SYNTACTIC_BEHAVIOUR = DECLARE_NAMESPACES + "$this//SyntacticBehaviour";
 
 	private static final String QUERY_LEMMA_FROM_SENSE = DECLARE_NAMESPACES + "$this/../Lemma";
 
@@ -34,33 +38,35 @@ public class Query
 
 	private static final String QUERY_SYNTACTIC_BEHAVIOUR_FROM_SENSE = DECLARE_NAMESPACES + "$this/../SyntacticBehaviour";
 
+	private static final String SELECT_BY_ID = "[@id='%s']";
+
 	public static Synset querySynsetById(XmlObject top, String id)
 	{
 		// Query from the top.
-		String query = QUERY_SYNSET + "[@id='" + id + "']";
+		String query = QUERY_SYNSET + String.format(SELECT_BY_ID, id);
 		XmlObject[] result = top.selectPath(query);
 		if (result.length > 1)
 		{
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(id);
 		}
 		if (result.length == 0)
 		{
-			throw new IllegalArgumentException();
+			throw new NoSuchElementException(id);
 		}
 		return (Synset) result[0];
 	}
 
 	public static Sense querySenseById(XmlObject top, String id)
 	{
-		String query = QUERY_SENSE + "[@id='" + id + "']";
+		String query = QUERY_SENSE + String.format(SELECT_BY_ID, id);
 		XmlObject[] result = top.selectPath(query);
 		if (result.length > 1)
 		{
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(id);
 		}
 		if (result.length == 0)
 		{
-			throw new IllegalArgumentException();
+			throw new NoSuchElementException(id);
 		}
 		return (Sense) result[0];
 	}
@@ -74,7 +80,7 @@ public class Query
 		}
 		if (result.length == 0)
 		{
-			throw new IllegalArgumentException();
+			throw new NoSuchElementException(sense.getId());
 		}
 		return (Lemma) result[0];
 	}
@@ -86,7 +92,7 @@ public class Query
 		XmlObject[] result = synset.selectPath(query);
 		if (result.length == 0)
 		{
-			throw new IllegalArgumentException();
+			throw new NoSuchElementException(synset.getId());
 		}
 		return (Lemma[]) result;
 	}
@@ -94,7 +100,7 @@ public class Query
 	public static Synset querySynsetFromSense(Sense sense)
 	{
 		String synsetId = sense.getSynset();
-		String query = QUERY_SYNSET_FROM_SENSE + "[@id='" + synsetId + "']";
+		String query = QUERY_SYNSET_FROM_SENSE + String.format(SELECT_BY_ID, synsetId);
 		XmlObject[] result = sense.selectPath(query);
 		if (result.length > 1)
 		{
@@ -102,7 +108,7 @@ public class Query
 		}
 		if (result.length == 0)
 		{
-			throw new IllegalArgumentException();
+			throw new NoSuchElementException(sense.getId());
 		}
 		return (Synset) result[0];
 	}
