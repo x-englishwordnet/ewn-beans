@@ -1,32 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="EntryPointsManager">
-    <entry_points version="2.0">
-      <entry_point TYPE="field" FQNAME="org.ewn.xmlbeans.Query QUERY_SYNTACTIC_BEHAVIOUR" />
-      <entry_point TYPE="field" FQNAME="QueryTest silent" />
-      <entry_point TYPE="field" FQNAME="Tests silent" />
-      <entry_point TYPE="field" FQNAME="Tests WORD" />
-    </entry_points>
-    <pattern value="QueryTest" method="getDocument" />
-    <pattern value="Tests" method="getDocument" />
-    <pattern value="Tests" method="getLemmaFromSense" />
-    <pattern value="Tests" method="getLemmasFromSynset" />
-    <pattern value="Tests" method="getSenseById" />
-    <pattern value="Tests" method="getSenseBySensekey" />
-    <pattern value="Tests" method="getSensesByWord" />
-    <pattern value="Tests" method="getSynsetById" />
-    <pattern value="Tests" method="getSynsetFromSense" />
-    <pattern value="QueryTest" />
-    <pattern value="Tests" />
-    <pattern value="org.ewn.xmlbeans.Utils" method="join" />
-    <pattern value="org.ewn.xmlbeans.Query" />
-    <pattern value="org.ewn.xmlbeans.Query" method="querySenses" />
-    <pattern value="org.ewn.xmlbeans.Query" method="querySynsets" />
-    <pattern value="QueryTest" method="queryWord" />
-    <pattern value="Tests" method="scanSenses" />
-    <pattern value="Tests" method="scanSynsets" />
-    <pattern value="org.ewn.xmlbeans.Utils" />
-  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -38,7 +11,7 @@
   <component name="ProjectResources">
     <resource url="http://xml.apache.org/xmlbeans/2004/02/xbean/config" location="" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" project-jdk-name="11 (2)" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
