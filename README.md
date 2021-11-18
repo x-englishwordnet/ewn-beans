@@ -10,7 +10,7 @@
 
 Provides access to English Wordnet (EWN) *src* files through Plain Old Java Object (Pojo) classes or '*beans*'. The Java objects are generated from the XSD typed schema by the XML Beans compiler. Selection of objects at runtime is done with **XPath** syntax.
 
-It uses the **Apache's XML Beans** framework and includes a Saxon runtime to implement XPath queries.
+It uses the **Apache's XML Beans** 5 framework and includes a Saxon 10 runtime to implement XPath queries.
 
 Please refer to the test classes in the source files to get a glimpse as to how it can be used.
 
@@ -20,6 +20,6 @@ GroupID and ArtifactID on Maven Central:
 
 	<groupId>io.github.x-englishwordnet</groupId>
 	<artifactId>ewn-beans</artifactId>
-	<version>1.0.1</version>
+	<version>1.2.0</version>
 	<name>EWN Beans</name>
 	

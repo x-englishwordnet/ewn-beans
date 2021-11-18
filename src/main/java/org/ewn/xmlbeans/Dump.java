@@ -5,9 +5,12 @@ import org.apache.xmlbeans.SimpleValue;
 import java.math.BigInteger;
 import java.util.List;
 
+/**
+ * Dump utils
+ */
 public class Dump
 {
-	public static void walkSense(SenseDocument.Sense sense, CharSequence indent, boolean silent)
+	public static void dumpSense(SenseDocument.Sense sense, CharSequence indent, boolean silent)
 	{
 		String id = sense.getId();
 		BigInteger n = sense.getN();
@@ -58,11 +61,11 @@ public class Dump
 		}
 	}
 
-	public static void walkSynset(SynsetDocument.Synset synset, CharSequence indent, boolean silent)
+	public static void dumpSynset(SynsetDocument.Synset synset, CharSequence indent, boolean silent)
 	{
 		if (!silent)
 		{
-			System.out.printf("%ssynset id: %s%n", indent, synset.getId());
+			System.out.printf("%ssynset id: %s %s%n", indent, synset.getId(), Strings.toMembersStringWithPronunciation(synset));
 		}
 		LemmaDocument.Lemma[] lemmas = Query.queryLemmasFromSynset(synset);
 		assert lemmas.length > 0;
@@ -79,8 +82,6 @@ public class Dump
 		{
 			System.out.printf("%s\tdefinition '%s'%n", indent, definitionValue.getStringValue());
 		}
-		// Alternatively
-		// System.out.printf("%s\tdefinition %s%n", indent, definition.getStringValue());
 
 		for (ExampleDocument.Example example : synset.getExampleArray())
 		{
@@ -89,8 +90,6 @@ public class Dump
 			{
 				System.out.printf("%s\texample %s%n", indent, exampleValue.getStringValue());
 			}
-			// Alternatively
-			// System.out.printf("%s\texample %s%n", indent, example.getStringValue());
 		}
 
 		for (SynsetRelationDocument.SynsetRelation synsetRelation : synset.getSynsetRelationArray())
@@ -105,5 +104,4 @@ public class Dump
 			}
 		}
 	}
-
 }
