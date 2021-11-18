@@ -1,7 +1,5 @@
 import org.apache.xmlbeans.SimpleValue;
 import org.apache.xmlbeans.XmlException;
-import org.junit.Before;
-import org.junit.Test;
 import org.ewn.xmlbeans.*;
 import org.ewn.xmlbeans.DefinitionDocument.Definition;
 import org.ewn.xmlbeans.ExampleDocument.Example;
@@ -10,9 +8,12 @@ import org.ewn.xmlbeans.SenseDocument.Sense;
 import org.ewn.xmlbeans.SenseRelationDocument.SenseRelation;
 import org.ewn.xmlbeans.SynsetDocument.Synset;
 import org.ewn.xmlbeans.SynsetRelationDocument.SynsetRelation;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
@@ -20,18 +21,29 @@ import static org.junit.Assert.assertTrue;
 
 public class QueryTest
 {
-	private static final String WORD = "spread";
+	private final String source = System.getProperty("SOURCE");
+
+	private final boolean silent = System.getProperties().containsKey("SILENT");
+
+	private static final String WORD = "giggle";
 
 	private LexicalResourceDocument document;
 
-	@Before public void getDocument() throws IOException, XmlException
+	@Before
+	public void getDocument() throws IOException, XmlException
 	{
-		String xewnHome = System.getenv("EWNHOME") + File.separator + File.separator + "src";
-		final File xmlFile = new File(xewnHome, "wn-verb.communication.xml");
+		if (source == null)
+		{
+			System.err.printf("Define source file with -DSOURCE=path%n");
+			System.exit(1);
+		}
+		final File xmlFile = new File(source);
+		System.out.printf("source=%s%n", xmlFile.getAbsolutePath());
 		this.document = LexicalResourceDocument.Factory.parse(xmlFile);
 	}
 
-	@Test public void queryWord()
+	@Test
+	public void queryWord()
 	{
 		assertNotNull(this.document);
 		Sense[] senses = Query.querySensesOf(this.document, WORD);
@@ -50,9 +62,11 @@ public class QueryTest
 
 	public void walkSense(Sense sense)
 	{
-		System.out.printf("sense id: %s%n", sense.getId());
-		System.out.printf("\tn: %s%n", sense.getN());
-		System.out.printf("\tdc:identifier: %s%n", sense.getIdentifier());
+		String id = sense.getId();
+		BigInteger n =  sense.getN();
+		System.out.printf("sense id: %s%n", id);
+		System.out.printf("\tsensekey: %s%n", Utils.toSensekey(id));
+		System.out.printf("\tn: %s%n", n==null? "" : n);
 
 		Lemma lemma = Query.queryLemmaFromSense(sense);
 		assertNotNull(lemma);
@@ -65,11 +79,13 @@ public class QueryTest
 		// verb
 		List<String> verbFrames = Query.queryVerbFrames(sense);
 		if (verbFrames != null)
+		{
 			for (String verbFrame : verbFrames)
 			{
 				assertNotNull(verbFrame);
 				System.out.printf("\tverb frame %s%n", verbFrame);
 			}
+		}
 		for (SenseRelation senseRelation : sense.getSenseRelationArray())
 		{
 			String target = senseRelation.getTarget();
