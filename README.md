@@ -20,6 +20,6 @@ GroupID and ArtifactID on Maven Central:
 
 	<groupId>io.github.x-englishwordnet</groupId>
 	<artifactId>ewn-beans</artifactId>
-	<version>1.2.0</version>
+	<version>1.21.0</version>
 	<name>EWN Beans</name>
 	

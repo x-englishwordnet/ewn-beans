@@ -15,6 +15,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -22,15 +24,15 @@ import static org.junit.Assert.assertNotNull;
 
 public class ScanTests
 {
-	private static final String source = System.getProperty("SOURCE");
+	private static final String source = System.getProperty("SOURCE2");
 
-	private static final boolean silent = System.getProperties().containsKey("SILENT");
-
-	private static final String WORD = "generate";
-	private static final String WORD2 = "suffer";
-	private static final String SYNSET_ID = "oewn-00054345-v";
-	private static final String SENSE_ID = "oewn-generate__2.29.00..";
-	private static final String SENSEKEY = "generate%2:29:00::";
+	private static final PrintStream ps = !System.getProperties().containsKey("SILENT") ? System.out : new PrintStream(new OutputStream()
+	{
+		public void write(int b)
+		{
+			//DO NOTHING
+		}
+	});
 
 	private static LexicalResourceDocument document;
 
@@ -68,10 +70,7 @@ public class ScanTests
 			assertNotNull(pos);
 			String writtenForm = lemma.getWrittenForm();
 			assertNotNull(writtenForm);
-			if (!silent)
-			{
-				System.out.printf("%s %s%n", writtenForm, Strings.toPronunciationsString(lemma));
-			}
+			ps.printf("%s %s%n", writtenForm, Strings.toPronunciationsString(lemma));
 		}
 	}
 
@@ -96,10 +95,7 @@ public class ScanTests
 
 			for (Sense sense : entry.getSenseArray())
 			{
-				if (!silent)
-				{
-					System.out.printf("%s%n", Strings.toPair(sense));
-				}
+				ps.printf("%s%n", Strings.toPair(sense));
 
 				String id = sense.getId();
 				assertNotNull(id);
@@ -107,11 +103,13 @@ public class ScanTests
 				assertNotNull(synsetId);
 
 				BigInteger n = sense.getN();
-				//assertNotNull(n);
+				//assertNotNull(n); // not true in merged OEWN
 				String identifier = sense.getIdentifier();
+				//assertNotNull(identifier); // not true in OEWN 2020, id replaces it
 
 				// adj
 				AdjPositionType.Enum adjPosition = sense.getAdjposition();
+				//assertNotNull(identifier); // not true for all words
 
 				// verb
 				List<String> verbFrames = Query.queryVerbFrames(sense);
@@ -120,7 +118,7 @@ public class ScanTests
 					for (String verbFrame : verbFrames)
 					{
 						assertNotNull(verbFrame);
-						//System.out.printf("verb frame %s%n", verbFrame);
+						//ps.printf("verb frame %s%n", verbFrame);
 					}
 				}
 				for (SenseRelation senseRelation : sense.getSenseRelationArray())
@@ -146,12 +144,10 @@ public class ScanTests
 
 		for (Synset synset : lexicon.getSynsetArray())
 		{
-			if (!silent)
-			{
-				System.out.printf("%s%n", Strings.toString(synset));
-			}
+			ps.printf("%s%n", Strings.toString(synset));
 
-			LexFileType.Enum lexFile = synset.getSubject();
+			LexFileType.Enum lexFile = synset.getLexfile();
+			// assertNotNull(lexFile); // not true in non merged files
 
 			PartOfSpeechType.Enum pos = synset.getPartOfSpeech();
 			assertNotNull(pos);

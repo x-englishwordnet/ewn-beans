@@ -1,5 +1,6 @@
 import org.apache.xmlbeans.XmlException;
 import org.ewn.xmlbeans.Dump;
+import org.ewn.xmlbeans.LexicalEntryDocument.LexicalEntry;
 import org.ewn.xmlbeans.LexicalResourceDocument;
 import org.ewn.xmlbeans.Query;
 import org.ewn.xmlbeans.SenseDocument.Sense;
@@ -9,6 +10,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -16,9 +19,15 @@ public class QueryTests
 {
 	private static final String source = System.getProperty("SOURCE");
 
-	private final boolean silent = System.getProperties().containsKey("SILENT");
+	private static final PrintStream ps = !System.getProperties().containsKey("SILENT") ? System.out : new PrintStream(new OutputStream()
+	{
+		public void write(int b)
+		{
+			//DO NOTHING
+		}
+	});
 
-	private static final String[] WORDS = new String[]{"giggle", "breathe", /* "house", "critical", "galore" */};
+	private static final String[] WORDS = new String[]{"smile", "giggle", "breathe", /* "house", "critical", "galore" */};
 
 	private static LexicalResourceDocument document;
 
@@ -38,39 +47,58 @@ public class QueryTests
 			System.exit(2);
 		}
 		document = LexicalResourceDocument.Factory.parse(xmlFile);
+		assertNotNull(document);
+		System.out.printf("loaded%n");
 	}
 
 	@Test
-	public void queryWords()
+	public void queryLexesOfWords()
 	{
 		for (String word : WORDS)
 		{
-			queryWord(word);
+			queryLexesOfWords(word);
 		}
 	}
 
-	public void queryWord(String word)
+	@Test
+	public void querySensesOfWords()
 	{
-		assertNotNull(document);
+		for (String word : WORDS)
+		{
+			querySensesOfWord(word);
+		}
+	}
+
+	public void queryLexesOfWords(String word)
+	{
+		ps.printf("query lexes of '%s'%n", word);
+
+		LexicalEntry[] lexes = Query.queryLexicalEntriesOf(document, word);
+		assertNotNull(lexes);
+		for (LexicalEntry lex : lexes)
+		{
+			assertNotNull(lex);
+			ps.printf("lex: %s%n", lex);
+			Dump.dumpLex(lex, "\t", ps);
+			ps.println();
+		}
+	}
+
+	public void querySensesOfWord(String word)
+	{
+		ps.printf("query senses of '%s'%n", word);
+
 		Sense[] senses = Query.querySensesOf(document, word);
 		assertNotNull(senses);
-		if (!silent)
-		{
-			System.out.println(word);
-		}
-
 		for (Sense sense : senses)
 		{
 			assertNotNull(sense);
-			Dump.dumpSense(sense, "\t", silent);
+			Dump.dumpSense(sense, "\t", ps);
 
 			Synset synset = Query.querySynsetFromSense(sense);
 			assertNotNull(synset);
-			Dump.dumpSynset(synset, "\t\t", silent);
-			if (!silent)
-			{
-				System.out.println();
-			}
+			Dump.dumpSynset(synset, "\t\t", ps);
+			ps.println();
 		}
 	}
 }
