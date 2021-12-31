@@ -6,7 +6,7 @@
 
 	<groupId>io.github.x-englishwordnet</groupId>
 	<artifactId>ewn-beans</artifactId>
-	<version>1.21.0</version>
+	<version>1.21.1</version>
 	<name>EWN Beans</name>
 	<description>Provides plain old java beans to bind to English WordNet XML files.</description>
 	<url>https://github.com/x-englishwordnet/ewn-beans</url>
@@ -127,11 +127,11 @@
 					<systemProperties>
 						<property>
 							<name>SOURCE</name>
-							<value>${env.XEWNHOME}/src_merged/wn.xml</value>
+							<value>${env.OEWNTKHOME}/src_merged/wn.xml</value>
 						</property>
 						<property>
 							<name>SOURCE2</name>
-							<value>${env.XEWNHOME}/src/xml/wn-verb.body.xml</value>
+							<value>${env.OEWNTKHOME}/src/xml/wn-verb.body.xml</value>
 						</property>
 						<property>
 							<name>SILENT</name>
